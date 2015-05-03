@@ -57,33 +57,49 @@ namespace Sudoku
             brd = new int[9,9];
         }
 
-        public void fillSquare(Point pt, int num)
+        public bool fillSquare(Point pt, int num)
         {
             int probR = -1, probC = -1;
             try
             {
                 probC = pt.X / boxWidth;
                 probR = pt.Y / boxHeight;
-                if (isValidinCol(num, probC) && isValidinRow(num, probR) && isValidinSquare(num, probR, probC))
-                {
-                    eraseSquare(pt);
-
-                    brd[probR, probC] = num;
-
-                    //new Point(probC*boxWidth+boxWidth/2,probR*boxHeight+boxHeight/2)
-                    pG.DrawString(num.ToString(), new Font("Arial", 22), new SolidBrush(Color.Black), new Point(probC * boxWidth + 20, probR * boxHeight + 20));
-                }
-                else
-                {
-                    MessageBox.Show("Can't put that number here.");
-                }
+                return fillHelper(probR, probC, num);
             }
             catch (IndexOutOfRangeException ioore)
             {
                 MessageBox.Show("Index out of range. probR is " + probR + " and probC is " + probC+ioore.ToString());
+                return false;
             }
         }
 
+        public bool fillHelper(int row, int col, int num)
+        {
+            if (isValidinCol(num, col) && isValidinRow(num, row) && isValidinSquare(num, row, col))
+            {
+                eraseSquare(new Point(col * boxWidth + 20, row * boxHeight + 20));
+                int[] prevMove = { row, col, brd[row, col], num };
+                Form1.prevMoves.Add(prevMove);
+                brd[row, col] = num;
+                String number;
+                if (num == 0)
+                {
+                    number = "";
+                }
+                else
+                {
+                    number = num.ToString();
+                }
+                //new Point(probC*boxWidth+boxWidth/2,probR*boxHeight+boxHeight/2)
+                pG.DrawString(number, new Font("Arial", 22), new SolidBrush(Color.Black), new Point(col * boxWidth + 20, row * boxHeight + 20));
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
         public void eraseSquare(Point pt)
         {
             int probR = -1, probC = -1;
@@ -109,10 +125,17 @@ namespace Sudoku
 
         public bool isValidinRow(int num, int row)
         {
+            if (num == 0)
+            {
+                return true;
+            }
             for (int i = 0; i < 9; i++)
             {
                 if (brd[row, i] == num)
                 {
+                    pG.DrawString(num.ToString(), new Font("Arial", 22), new SolidBrush(Color.Red), new Point(i * boxWidth + 20, row * boxHeight + 20));
+                    MessageBox.Show("Can't put "+num+" in that row.");
+                    pG.DrawString(num.ToString(), new Font("Arial", 22), new SolidBrush(Color.Black), new Point(i * boxWidth + 20, row * boxHeight + 20));
                     return false;
                 }
             }
@@ -121,10 +144,17 @@ namespace Sudoku
 
         public bool isValidinCol(int num, int col)
         {
+            if (num == 0)
+            {
+                return true;
+            } 
             for (int i = 0; i < 9; i++)
             {
                 if (brd[i,col] == num)
                 {
+                    pG.DrawString(num.ToString(), new Font("Arial", 22), new SolidBrush(Color.Red), new Point(col * boxWidth + 20, i * boxHeight + 20));
+                    MessageBox.Show("Can't put " + num + " in that column.");
+                    pG.DrawString(num.ToString(), new Font("Arial", 22), new SolidBrush(Color.Black), new Point(col * boxWidth + 20, i * boxHeight + 20));
                     return false;
                 }
             }
@@ -133,6 +163,10 @@ namespace Sudoku
 
         public bool isValidinSquare(int num, int row, int col)
         {
+            if (num == 0)
+            {
+                return true;
+            } 
             row = row / 3;
             col = col / 3;
             for (int r = 0; r < 3; r++)
@@ -141,6 +175,9 @@ namespace Sudoku
                 {
                     if (brd[row * 3 + r, col * 3 + c] == num)
                     {
+                        pG.DrawString(num.ToString(), new Font("Arial", 22), new SolidBrush(Color.Red), new Point((col * 3 + c) * boxWidth + 20, (row * 3 + r) * boxHeight + 20));
+                        MessageBox.Show("Can't put " + num + " in that 3x3.");
+                        pG.DrawString(num.ToString(), new Font("Arial", 22), new SolidBrush(Color.Black), new Point((col * 3 + c) * boxWidth + 20, (row * 3 + r) * boxHeight + 20));
                         return false;
                     }
                 }

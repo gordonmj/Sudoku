@@ -15,7 +15,9 @@ namespace Sudoku
         public Board sudokuBoard;
         public int numClicked;
         public bool gameStarted = false;
-
+        //public Button buttons[] = {button1,button2, button3, button4, button5, button6, button7, button8, button9};
+        public static List<int[]> prevMoves = new List<int[]>();
+        
         public Form1()
         {
             InitializeComponent();
@@ -101,8 +103,10 @@ namespace Sudoku
             }
             if (numClicked > 0 && numClicked < 10)
             {
-                sudokuBoard.fillSquare(e.Location, numClicked);
-                numClicked = 0;
+                if (sudokuBoard.fillSquare(e.Location, numClicked))
+                {
+                    numClicked = 0;
+                }
             }
             else if (numClicked == -1)
             {
@@ -130,6 +134,14 @@ namespace Sudoku
         private void exitButton_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void undoButton_Click(object sender, EventArgs e)
+        {
+            int[] prevMove = prevMoves.ElementAt(prevMoves.Count() - 1);
+            sudokuBoard.fillHelper(prevMove[0], prevMove[1], prevMove[2]);
+            prevMoves.RemoveAt(prevMoves.Count() - 1);
+
         }
 
     }

@@ -214,6 +214,7 @@
             this.undoButton.TabIndex = 13;
             this.undoButton.Text = "Undo";
             this.undoButton.UseVisualStyleBackColor = true;
+            this.undoButton.Click += new System.EventHandler(this.undoButton_Click);
             // 
             // solutionButton
             // 
@@ -242,7 +243,7 @@
             this.playerID.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.playerID.AutoSize = true;
             this.playerID.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.playerID.Location = new System.Drawing.Point(863, 166);
+            this.playerID.Location = new System.Drawing.Point(863, 172);
             this.playerID.Name = "playerID";
             this.playerID.Size = new System.Drawing.Size(108, 25);
             this.playerID.TabIndex = 16;
