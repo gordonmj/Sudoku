@@ -136,7 +136,9 @@ namespace Sudoku
                 return;
             }
             gameStarted = true;
+            resetButton_Click(sender, e);
             sudokuBoard.loadBoard();
+            sudokuBoard.loadFirstNine();
         }
 
         private void exitButton_Click(object sender, EventArgs e)
@@ -146,9 +148,22 @@ namespace Sudoku
 
         private void undoButton_Click(object sender, EventArgs e)
         {
-            int[] prevMove = prevMoves.ElementAt(prevMoves.Count() - 1);
-            sudokuBoard.fillHelper(prevMove[0], prevMove[1], prevMove[2],true);
-            prevMoves.RemoveAt(prevMoves.Count() - 1);
+            if (!gameStarted)
+            {
+                MessageBox.Show("Please start a new game first.");
+                return;
+            }
+            try
+            {
+                int[] prevMove = prevMoves.ElementAt(prevMoves.Count() - 1);
+                sudokuBoard.fillHelper(prevMove[0], prevMove[1], prevMove[2], true, true);
+                prevMoves.RemoveAt(prevMoves.Count() - 1);
+
+            }
+            catch (IndexOutOfRangeException ioore)
+            {
+                MessageBox.Show("No more to undo.");
+            }
 
         }
 

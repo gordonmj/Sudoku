@@ -22,6 +22,7 @@ namespace Sudoku
         public bool[,] fxd = new bool[9,9];
         List<int[,]> allBoards = new List<int[,]>();
         public int boardIndex = 0;
+        public int[,] sol = new int[9, 9];
 
         public Board(Panel p)
         {
@@ -67,7 +68,7 @@ namespace Sudoku
             {
                 probC = pt.X / boxWidth;
                 probR = pt.Y / boxHeight;
-                return fillHelper(probR, probC, num,false);
+                return fillHelper(probR, probC, num,false,true);
             }
             catch (IndexOutOfRangeException ioore)
             {
@@ -76,11 +77,16 @@ namespace Sudoku
             }
         }
 
-        public bool fillHelper(int row, int col, int num, bool isUndo)
+        public bool fillHelper(int row, int col, int num, bool isUndo, bool isManual)
         {
-            if (isValidinCol(num, col) && isValidinRow(num, row) && isValidinSquare(num, row, col))
+            if (!isManual || (isValidinCol(num, col) && isValidinRow(num, row) && isValidinSquare(num, row, col)))
             {
                 eraseSquare(new Point(col * boxWidth + 20, row * boxHeight + 20));
+                if (fxd[row, col])
+                {
+                    MessageBox.Show("Sorry. You cannot change this space. Try again.");
+                    return false;
+                }
                 int[] prevMove = { row, col, brd[row, col], num };
                 if (!isUndo)
                 {
@@ -115,7 +121,6 @@ namespace Sudoku
                 probR = pt.Y / boxHeight;
                 if (fxd[probR, probC])
                 {
-                    MessageBox.Show("Sorry. You cannot change this space. Try again.");
                     return;
                 }
                 brd[probR, probC] = 0;
@@ -216,7 +221,7 @@ namespace Sudoku
                 {
                     for (int c = 0; c < 9; c++)
                     {
-                        newBoard[r, c] = Convert.ToInt32(line[numeral++]);
+                        newBoard[r, c] = Convert.ToInt32(line[numeral++])-48;
                     }//c
                 }//r
                 allBoards.Add(newBoard);
@@ -225,7 +230,24 @@ namespace Sudoku
 
         public void loadBoard()
         {
-            brd = allBoards.ElementAt(boardIndex++);
+            sol = allBoards.ElementAt(boardIndex++);
+            fxd = new bool[9, 9];
+        }
+
+        public void loadFirstNine()
+        {
+            Random rnd = new Random();
+            int done = 0;
+            int randRow, randCol;
+            while (done <= 9){
+            randRow = rnd.Next(0, 9);
+            randCol = rnd.Next(0, 9);
+            if (brd[randRow,randCol]==0){
+                fillHelper(randRow, randCol, sol[randRow, randCol], false, false);
+                fxd[randRow, randCol] = true;
+                done++;
+                }
+            }
         }
 
         public void showSolution()
@@ -234,7 +256,7 @@ namespace Sudoku
             {
                 for (int c = 0; c < 9; c++)
                 {
-                    fillHelper(r, c, brd[r, c], false);
+                    fillHelper(r, c, sol[r, c], false,false);
                 }
             }
         }
