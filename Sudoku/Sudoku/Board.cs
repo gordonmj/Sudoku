@@ -20,6 +20,9 @@ namespace Sudoku
         public int boxHeight;
         public int[,] brd = new int[9,9]; 
         public bool[,] fxd = new bool[9,9];
+        List<int[,]> allBoards = new List<int[,]>();
+        public int boardIndex = 0;
+
         public Board(Panel p)
         {
             panel = p;
@@ -186,6 +189,54 @@ namespace Sudoku
                 }
             }
             return true;
+        }
+
+        public void textFileToGrid()
+        {
+            /*
+            OpenFileDialog oFD = new OpenFileDialog();
+            oFD.Filter = "Plaintext Files|*.txt";
+            oFD.Title = "Select a Plaintext File";
+            String filename = "";
+            if (oFD.ShowDialog() == DialogResult.OK)
+            {
+                filename = oFD.FileName;
+            }
+            */
+            //filename = "/solutions.txt";
+            string[] lines = System.IO.File.ReadAllLines(@"C:\\Users\\Michael\\Dropbox\\School\\Practicum\\Sudoku\\Sudoku\\solutions.txt");
+            char[] delims = { '\n' };
+            string line;
+            for (int game = 0; game < 7000; game += 70)
+            {
+                line = lines[game];
+                int[,] newBoard = new int[9, 9];
+                int numeral = 0;
+                for (int r = 0; r < 9; r++)
+                {
+                    for (int c = 0; c < 9; c++)
+                    {
+                        newBoard[r, c] = Convert.ToInt32(line[numeral++]);
+                    }//c
+                }//r
+                allBoards.Add(newBoard);
+            }//for game
+        }//method
+
+        public void loadBoard()
+        {
+            brd = allBoards.ElementAt(boardIndex++);
+        }
+
+        public void showSolution()
+        {
+            for (int r = 0; r < 9; r++)
+            {
+                for (int c = 0; c < 9; c++)
+                {
+                    fillHelper(r, c, brd[r, c], false);
+                }
+            }
         }
 
     }//class

@@ -226,6 +226,7 @@
             this.solutionButton.TabIndex = 14;
             this.solutionButton.Text = "Show Solution";
             this.solutionButton.UseVisualStyleBackColor = true;
+            this.solutionButton.Click += new System.EventHandler(this.solutionButton_Click);
             // 
             // stuckButton
             // 

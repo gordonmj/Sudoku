@@ -15,6 +15,7 @@ namespace Sudoku
         public Board sudokuBoard;
         public int numClicked;
         public bool gameStarted = false;
+        public bool setUp = false;
         //public Button buttons[] = {button1,button2, button3, button4, button5, button6, button7, button8, button9};
         public static List<int[]> prevMoves = new List<int[]>();
         
@@ -35,7 +36,9 @@ namespace Sudoku
 
         private void startButton_Click(object sender, EventArgs e)
         {
+            sudokuBoard.textFileToGrid();
             sudokuBoard.displayBoard();
+            setUp = true;
         }
 
         private void resetButton_Click(object sender, EventArgs e)
@@ -127,8 +130,13 @@ namespace Sudoku
 
         private void newGameButton_Click(object sender, EventArgs e)
         {
-            startButton_Click(sender, e);
+            if (!setUp)
+            {
+                MessageBox.Show("Please press 'start' first.");
+                return;
+            }
             gameStarted = true;
+            sudokuBoard.loadBoard();
         }
 
         private void exitButton_Click(object sender, EventArgs e)
@@ -142,6 +150,11 @@ namespace Sudoku
             sudokuBoard.fillHelper(prevMove[0], prevMove[1], prevMove[2],true);
             prevMoves.RemoveAt(prevMoves.Count() - 1);
 
+        }
+
+        private void solutionButton_Click(object sender, EventArgs e)
+        {
+            sudokuBoard.showSolution();
         }
 
     }
