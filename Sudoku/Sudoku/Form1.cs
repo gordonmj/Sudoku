@@ -139,7 +139,7 @@ namespace Sudoku
         private void undoButton_Click(object sender, EventArgs e)
         {
             int[] prevMove = prevMoves.ElementAt(prevMoves.Count() - 1);
-            sudokuBoard.fillHelper(prevMove[0], prevMove[1], prevMove[2]);
+            sudokuBoard.fillHelper(prevMove[0], prevMove[1], prevMove[2],true);
             prevMoves.RemoveAt(prevMoves.Count() - 1);
 
         }

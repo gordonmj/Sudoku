@@ -64,7 +64,7 @@ namespace Sudoku
             {
                 probC = pt.X / boxWidth;
                 probR = pt.Y / boxHeight;
-                return fillHelper(probR, probC, num);
+                return fillHelper(probR, probC, num,false);
             }
             catch (IndexOutOfRangeException ioore)
             {
@@ -73,13 +73,16 @@ namespace Sudoku
             }
         }
 
-        public bool fillHelper(int row, int col, int num)
+        public bool fillHelper(int row, int col, int num, bool isUndo)
         {
             if (isValidinCol(num, col) && isValidinRow(num, row) && isValidinSquare(num, row, col))
             {
                 eraseSquare(new Point(col * boxWidth + 20, row * boxHeight + 20));
                 int[] prevMove = { row, col, brd[row, col], num };
-                Form1.prevMoves.Add(prevMove);
+                if (!isUndo)
+                {
+                    Form1.prevMoves.Add(prevMove);
+                }
                 brd[row, col] = num;
                 String number;
                 if (num == 0)
