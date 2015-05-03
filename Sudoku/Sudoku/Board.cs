@@ -80,7 +80,7 @@ namespace Sudoku
             }
             catch (IndexOutOfRangeException ioore)
             {
-                MessageBox.Show("Index out of range. probR is " + probR + " and probC is " + probC);
+                MessageBox.Show("Index out of range. probR is " + probR + " and probC is " + probC+ioore.ToString());
             }
         }
 
@@ -133,7 +133,8 @@ namespace Sudoku
 
         public bool isValidinSquare(int num, int row, int col)
         {
-            int[,] squares = { { row * 3, col * 3 }, { row * 3, col * 3 + 1 }, { row * 3, col * 3 + 2 }, { row * 3 + 1, col * 3 }, { row * 3 + 1, col * 3 + 1 }, { row * 3 + 1, col * 3 + 2 }, { row * 3 + 2, col * 3 }, { row * 3 + 2, col * 3 + 1 }, { row * 3 + 2, col * 3 + 2 } };
+            row = row % 3;
+            col = col % 3;
             for (int r = 0; r < 3; r++)
             {
                 for (int c = 0; c < 3; c++)
