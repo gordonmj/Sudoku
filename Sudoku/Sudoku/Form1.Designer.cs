@@ -44,6 +44,9 @@
             this.undoButton = new System.Windows.Forms.Button();
             this.solutionButton = new System.Windows.Forms.Button();
             this.stuckButton = new System.Windows.Forms.Button();
+            this.playerID = new System.Windows.Forms.Label();
+            this.buttonBlank = new System.Windows.Forms.Button();
+            this.exitButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // board
@@ -53,7 +56,9 @@
             this.board.Name = "board";
             this.board.Size = new System.Drawing.Size(600, 600);
             this.board.TabIndex = 0;
+            this.board.Click += new System.EventHandler(this.board_Click);
             this.board.Paint += new System.Windows.Forms.PaintEventHandler(this.board_Paint);
+            this.board.MouseClick += new System.Windows.Forms.MouseEventHandler(this.board_MouseClick);
             // 
             // startButton
             // 
@@ -77,6 +82,7 @@
             this.resetButton.TabIndex = 2;
             this.resetButton.Text = "Reset";
             this.resetButton.UseVisualStyleBackColor = true;
+            this.resetButton.Click += new System.EventHandler(this.resetButton_Click);
             // 
             // newGameButton
             // 
@@ -88,111 +94,121 @@
             this.newGameButton.TabIndex = 3;
             this.newGameButton.Text = "New Game";
             this.newGameButton.UseVisualStyleBackColor = true;
+            this.newGameButton.Click += new System.EventHandler(this.newGameButton_Click);
             // 
             // button1
             // 
             this.button1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(644, 73);
+            this.button1.Location = new System.Drawing.Point(644, 60);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(30, 30);
             this.button1.TabIndex = 4;
             this.button1.Text = "1";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
             this.button2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(680, 73);
+            this.button2.Location = new System.Drawing.Point(680, 60);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(30, 30);
             this.button2.TabIndex = 5;
             this.button2.Text = "2";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
             this.button3.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.Location = new System.Drawing.Point(716, 73);
+            this.button3.Location = new System.Drawing.Point(716, 60);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(30, 30);
             this.button3.TabIndex = 6;
             this.button3.Text = "3";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
             this.button4.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.Location = new System.Drawing.Point(716, 109);
+            this.button4.Location = new System.Drawing.Point(644, 96);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(30, 30);
             this.button4.TabIndex = 9;
-            this.button4.Text = "6";
+            this.button4.Text = "4";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button5
             // 
             this.button5.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button5.Location = new System.Drawing.Point(680, 109);
+            this.button5.Location = new System.Drawing.Point(680, 96);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(30, 30);
             this.button5.TabIndex = 8;
             this.button5.Text = "5";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button6
             // 
             this.button6.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button6.Location = new System.Drawing.Point(644, 109);
+            this.button6.Location = new System.Drawing.Point(716, 96);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(30, 30);
             this.button6.TabIndex = 7;
-            this.button6.Text = "4";
+            this.button6.Text = "6";
             this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // button7
             // 
             this.button7.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.button7.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button7.Location = new System.Drawing.Point(716, 145);
+            this.button7.Location = new System.Drawing.Point(644, 132);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(30, 30);
             this.button7.TabIndex = 12;
-            this.button7.Text = "9";
+            this.button7.Text = "7";
             this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // button8
             // 
             this.button8.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.button8.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button8.Location = new System.Drawing.Point(680, 145);
+            this.button8.Location = new System.Drawing.Point(680, 132);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(30, 30);
             this.button8.TabIndex = 11;
             this.button8.Text = "8";
             this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // button9
             // 
             this.button9.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.button9.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button9.Location = new System.Drawing.Point(644, 145);
+            this.button9.Location = new System.Drawing.Point(716, 132);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(30, 30);
             this.button9.TabIndex = 10;
-            this.button9.Text = "7";
+            this.button9.Text = "9";
             this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // undoButton
             // 
             this.undoButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.undoButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.undoButton.Location = new System.Drawing.Point(868, 82);
+            this.undoButton.Location = new System.Drawing.Point(868, 69);
             this.undoButton.Name = "undoButton";
             this.undoButton.Size = new System.Drawing.Size(74, 38);
             this.undoButton.TabIndex = 13;
@@ -221,11 +237,49 @@
             this.stuckButton.Text = "Am I Stuck?";
             this.stuckButton.UseVisualStyleBackColor = true;
             // 
+            // playerID
+            // 
+            this.playerID.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.playerID.AutoSize = true;
+            this.playerID.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.playerID.Location = new System.Drawing.Point(863, 166);
+            this.playerID.Name = "playerID";
+            this.playerID.Size = new System.Drawing.Size(108, 25);
+            this.playerID.TabIndex = 16;
+            this.playerID.Text = "Player ID";
+            // 
+            // buttonBlank
+            // 
+            this.buttonBlank.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.buttonBlank.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonBlank.Location = new System.Drawing.Point(680, 172);
+            this.buttonBlank.Name = "buttonBlank";
+            this.buttonBlank.Size = new System.Drawing.Size(30, 30);
+            this.buttonBlank.TabIndex = 17;
+            this.buttonBlank.Text = "-";
+            this.buttonBlank.UseVisualStyleBackColor = true;
+            this.buttonBlank.Click += new System.EventHandler(this.buttonBlank_Click);
+            // 
+            // exitButton
+            // 
+            this.exitButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.exitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.exitButton.Location = new System.Drawing.Point(868, 125);
+            this.exitButton.Name = "exitButton";
+            this.exitButton.Size = new System.Drawing.Size(74, 38);
+            this.exitButton.TabIndex = 18;
+            this.exitButton.Text = "Exit";
+            this.exitButton.UseVisualStyleBackColor = true;
+            this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1067, 750);
+            this.Controls.Add(this.exitButton);
+            this.Controls.Add(this.buttonBlank);
+            this.Controls.Add(this.playerID);
             this.Controls.Add(this.stuckButton);
             this.Controls.Add(this.solutionButton);
             this.Controls.Add(this.undoButton);
@@ -246,6 +300,7 @@
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -267,6 +322,9 @@
         private System.Windows.Forms.Button undoButton;
         private System.Windows.Forms.Button solutionButton;
         private System.Windows.Forms.Button stuckButton;
+        private System.Windows.Forms.Label playerID;
+        private System.Windows.Forms.Button buttonBlank;
+        private System.Windows.Forms.Button exitButton;
     }
 }
 
