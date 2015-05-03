@@ -36,6 +36,10 @@ namespace Sudoku
 
         private void startButton_Click(object sender, EventArgs e)
         {
+            if (setUp)
+            {
+                return;
+            }
             sudokuBoard.textFileToGrid();
             sudokuBoard.displayBoard();
             setUp = true;
@@ -138,7 +142,7 @@ namespace Sudoku
             gameStarted = true;
             resetButton_Click(sender, e);
             sudokuBoard.loadBoard();
-            sudokuBoard.loadFirstNine();
+            //sudokuBoard.loadFirstNine();
         }
 
         private void exitButton_Click(object sender, EventArgs e)
@@ -148,6 +152,7 @@ namespace Sudoku
 
         private void undoButton_Click(object sender, EventArgs e)
         {
+            /*
             if (!gameStarted)
             {
                 MessageBox.Show("Please start a new game first.");
@@ -164,12 +169,12 @@ namespace Sudoku
             {
                 MessageBox.Show("No more to undo.");
             }
-
+            */
         }
 
         private void solutionButton_Click(object sender, EventArgs e)
         {
-            sudokuBoard.showSolution();
+            //sudokuBoard.showSolution();
         }
 
     }
