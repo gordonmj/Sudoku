@@ -28,5 +28,10 @@ namespace Sudoku
         {
             sudokuBoard = new Board(board);
         }
+
+        private void startButton_Click(object sender, EventArgs e)
+        {
+            sudokuBoard.displayBoard();
+        }
     }
 }
