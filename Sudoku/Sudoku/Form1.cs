@@ -36,6 +36,10 @@ namespace Sudoku
 
         private void startButton_Click(object sender, EventArgs e)
         {
+            if (setUp)
+            {
+                return;
+            }
             sudokuBoard.textFileToGrid();
             sudokuBoard.displayBoard();
             setUp = true;
