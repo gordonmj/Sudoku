@@ -209,7 +209,7 @@ namespace Sudoku
             }
             */
             //filename = "/solutions.txt";
-            string[] lines = System.IO.File.ReadAllLines(@"C:\\Users\\Michael\\Dropbox\\School\\Practicum\\Sudoku\\Sudoku\\solutions.txt");
+            string[] lines = System.IO.File.ReadAllLines(@"C:\\Users\\mgordon\\Documents\\solutions.txt");
             char[] delims = { '\n' };
             string line;
             for (int game = 0; game < 7000; game += 70)
@@ -256,7 +256,10 @@ namespace Sudoku
             {
                 for (int c = 0; c < 9; c++)
                 {
-                    fillHelper(r, c, sol[r, c], false,false);
+                    if (!fxd[r, c])
+                    {
+                        fillHelper(r, c, sol[r, c], false, false);
+                    }
                 }
             }
         }
