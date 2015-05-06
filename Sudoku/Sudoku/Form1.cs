@@ -32,9 +32,10 @@ namespace Sudoku
         private void board_Paint(object sender, PaintEventArgs e)
         {
             sudokuBoard = new Board(board);
+            start();
         }
 
-        private void startButton_Click(object sender, EventArgs e)
+        private void start()
         {
             if (setUp)
             {
@@ -43,7 +44,6 @@ namespace Sudoku
             sudokuBoard.textFileToGrid();
             sudokuBoard.displayBoard();
             setUp = true;
-            startButton.BackColor = Color.LightGray;
             newGameButton.ForeColor = Color.Black;
             exitButton.ForeColor = Color.Black;
         }
@@ -137,11 +137,6 @@ namespace Sudoku
 
         private void newGameButton_Click(object sender, EventArgs e)
         {
-            if (!setUp)
-            {
-                MessageBox.Show("Please press 'start' first.");
-                return;
-            }
             gameStarted = true;
             resetButton_Click(sender, e);
             sudokuBoard.loadBoard();
