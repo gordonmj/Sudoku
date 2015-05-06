@@ -194,5 +194,10 @@ namespace Sudoku
             sudokuBoard.showSolution();
         }
 
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

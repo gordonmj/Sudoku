@@ -52,6 +52,7 @@
             this.lastGameBeginner = new System.Windows.Forms.Button();
             this.lastGameModerate = new System.Windows.Forms.Button();
             this.lastGameAdvanced = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // board
@@ -356,11 +357,22 @@
             this.lastGameAdvanced.Text = "Last Game Advanced";
             this.lastGameAdvanced.UseVisualStyleBackColor = true;
             // 
+            // textBox1
+            // 
+            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.ForeColor = System.Drawing.SystemColors.InactiveCaption;
+            this.textBox1.Location = new System.Drawing.Point(824, 278);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(136, 29);
+            this.textBox1.TabIndex = 25;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1067, 750);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.lastGameAdvanced);
             this.Controls.Add(this.lastGameModerate);
             this.Controls.Add(this.lastGameBeginner);
@@ -419,6 +431,7 @@
         private System.Windows.Forms.Button lastGameBeginner;
         private System.Windows.Forms.Button lastGameModerate;
         private System.Windows.Forms.Button lastGameAdvanced;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 
