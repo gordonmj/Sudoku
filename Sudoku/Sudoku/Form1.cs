@@ -44,6 +44,8 @@ namespace Sudoku
             sudokuBoard.displayBoard();
             setUp = true;
             startButton.BackColor = Color.LightGray;
+            newGameButton.ForeColor = Color.Black;
+            exitButton.ForeColor = Color.Black;
         }
 
         private void resetButton_Click(object sender, EventArgs e)
@@ -144,6 +146,26 @@ namespace Sudoku
             resetButton_Click(sender, e);
             sudokuBoard.loadBoard();
             sudokuBoard.loadFirstNine();
+            button1.ForeColor = Color.Black;
+            button2.ForeColor = Color.Black;
+            button3.ForeColor = Color.Black;
+            button4.ForeColor = Color.Black;
+            button5.ForeColor = Color.Black;
+            button6.ForeColor = Color.Black;
+            button7.ForeColor = Color.Black;
+            button8.ForeColor = Color.Black;
+            button9.ForeColor = Color.Black;
+            buttonBlank.ForeColor = Color.Black;
+            solutionButton.ForeColor = Color.Black;
+            stuckButton.ForeColor = Color.Black;
+            Beginner.ForeColor = Color.Black;
+            lastGameBeginner.ForeColor = Color.Black;
+            moderate.ForeColor = Color.Black;
+            lastGameModerate.ForeColor = Color.Black;
+            Advanced.ForeColor = Color.Black;
+            lastGameAdvanced.ForeColor = Color.Black;
+            undoButton.ForeColor = Color.Black;
+            resetButton.ForeColor = Color.Black;
         }
 
         private void exitButton_Click(object sender, EventArgs e)
