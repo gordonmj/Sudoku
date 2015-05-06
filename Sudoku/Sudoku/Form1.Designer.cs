@@ -69,13 +69,14 @@
             // startButton
             // 
             this.startButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.startButton.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.startButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.startButton.Location = new System.Drawing.Point(644, 13);
             this.startButton.Name = "startButton";
             this.startButton.Size = new System.Drawing.Size(167, 38);
             this.startButton.TabIndex = 1;
             this.startButton.Text = "Start";
-            this.startButton.UseVisualStyleBackColor = true;
+            this.startButton.UseVisualStyleBackColor = false;
             this.startButton.Click += new System.EventHandler(this.startButton_Click);
             // 
             // resetButton
@@ -93,7 +94,7 @@
             // newGameButton
             // 
             this.newGameButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.newGameButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.newGameButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.newGameButton.Location = new System.Drawing.Point(841, 13);
             this.newGameButton.Name = "newGameButton";
             this.newGameButton.Size = new System.Drawing.Size(85, 64);
@@ -225,7 +226,7 @@
             // solutionButton
             // 
             this.solutionButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.solutionButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.solutionButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.solutionButton.Location = new System.Drawing.Point(841, 82);
             this.solutionButton.Name = "solutionButton";
             this.solutionButton.Size = new System.Drawing.Size(85, 64);
@@ -237,7 +238,7 @@
             // stuckButton
             // 
             this.stuckButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.stuckButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.stuckButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.stuckButton.Location = new System.Drawing.Point(841, 153);
             this.stuckButton.Name = "stuckButton";
             this.stuckButton.Size = new System.Drawing.Size(85, 64);

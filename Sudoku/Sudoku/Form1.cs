@@ -43,6 +43,7 @@ namespace Sudoku
             sudokuBoard.textFileToGrid();
             sudokuBoard.displayBoard();
             setUp = true;
+            startButton.BackColor = Color.LightGray;
         }
 
         private void resetButton_Click(object sender, EventArgs e)
