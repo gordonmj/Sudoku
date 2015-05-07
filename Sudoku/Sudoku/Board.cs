@@ -37,6 +37,11 @@ namespace Sudoku
         public void displayBoard()
         {
             pG.FillRectangle(new SolidBrush(Color.White), 0, 0, width, height);
+            drawLines();
+        }//method
+
+        public void drawLines()
+        {
             for (int r = 0; r < 9; r++)
             {
 
@@ -44,7 +49,7 @@ namespace Sudoku
                 {
                     if (r % 3 == 0 && c % 3 == 0)
                     {
-                        pG.DrawRectangle(new Pen(new SolidBrush(Color.Red),5), c * boxWidth, r * boxHeight, 3*boxWidth, 3*boxHeight);
+                        pG.DrawRectangle(new Pen(new SolidBrush(Color.Red), 5), c * boxWidth, r * boxHeight, 3 * boxWidth, 3 * boxHeight);
                     }
                     pG.DrawRectangle(new Pen(new SolidBrush(Color.Red)), c * boxWidth, r * boxHeight, boxWidth, boxHeight);
                     if ((r == 3 || r == 6) && (c == 3 || c == 6))
@@ -53,8 +58,7 @@ namespace Sudoku
                     }//if
                 }//for c
             }//for r
-        }//method
-
+        }
         public void clearDisplay()
         {
             displayBoard();
@@ -144,9 +148,8 @@ namespace Sudoku
             {
                 if (brd[row, i] == num)
                 {
-                    pG.DrawString(num.ToString(), new Font("Arial", 22), new SolidBrush(Color.Red), new Point(i * boxWidth + 20, row * boxHeight + 20));
-                    MessageBox.Show("Can't put "+num+" in that row.");
-                    pG.DrawString(num.ToString(), new Font("Arial", 22), new SolidBrush(Color.Black), new Point(i * boxWidth + 20, row * boxHeight + 20));
+                    highlightWithMessage(num, row, i, "column");
+
                     return false;
                 }
             }
@@ -163,9 +166,7 @@ namespace Sudoku
             {
                 if (brd[i,col] == num)
                 {
-                    pG.DrawString(num.ToString(), new Font("Arial", 22), new SolidBrush(Color.Red), new Point(col * boxWidth + 20, i * boxHeight + 20));
-                    MessageBox.Show("Can't put " + num + " in that column.");
-                    pG.DrawString(num.ToString(), new Font("Arial", 22), new SolidBrush(Color.Black), new Point(col * boxWidth + 20, i * boxHeight + 20));
+                    highlightWithMessage(num, i, col, "column");
                     return false;
                 }
             }
@@ -186,14 +187,23 @@ namespace Sudoku
                 {
                     if (brd[row * 3 + r, col * 3 + c] == num)
                     {
-                        pG.DrawString(num.ToString(), new Font("Arial", 22), new SolidBrush(Color.Red), new Point((col * 3 + c) * boxWidth + 20, (row * 3 + r) * boxHeight + 20));
-                        MessageBox.Show("Can't put " + num + " in that 3x3.");
-                        pG.DrawString(num.ToString(), new Font("Arial", 22), new SolidBrush(Color.Black), new Point((col * 3 + c) * boxWidth + 20, (row * 3 + r) * boxHeight + 20));
+                        highlightWithMessage(num, (row * 3 + r),(col * 3 + c), "3x3 square");
                         return false;
                     }
                 }
             }
             return true;
+        }
+
+        public void highlightWithMessage(int num, int row, int col, String msg)
+        {
+            pG.FillRectangle(new SolidBrush(Color.Red), col * boxWidth, row * boxHeight, boxWidth, boxHeight);
+            pG.DrawString(num.ToString(), new Font("Arial", 22), new SolidBrush(Color.White), new Point(col * boxWidth + 20, row * boxHeight + 20));
+            MessageBox.Show("Can't put " + num + " in that "+msg+".");
+            pG.FillRectangle(new SolidBrush(Color.White), col * boxWidth, row * boxHeight, boxWidth, boxHeight);
+            pG.DrawRectangle(new Pen(new SolidBrush(Color.Red)), col * boxWidth, row * boxHeight, boxWidth, boxHeight);
+            pG.DrawString(num.ToString(), new Font("Arial", 22), new SolidBrush(Color.Black), new Point(col * boxWidth + 20, row * boxHeight + 20));
+            drawLines();
         }
 
         public void textFileToGrid()
