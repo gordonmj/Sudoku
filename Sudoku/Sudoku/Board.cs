@@ -24,6 +24,9 @@ namespace Sudoku
         List<int[,]> beginnerBoards = new List<int[,]>();
         List<int[,]> moderateBoards = new List<int[,]>();
         List<int[,]> advancedBoards = new List<int[,]>();
+        List<int> beginnerGamesPlayed = new List<int>();
+        List<int> moderateGamesPlayed = new List<int>();
+        List<int> advancedGamesPlayed = new List<int>();
         List<bool[,]> beginnerFixed = new List<bool[,]>();
         List<bool[,]> moderateFixed = new List<bool[,]>();
         List<bool[,]> advancedFixed = new List<bool[,]>(); 
@@ -160,7 +163,7 @@ namespace Sudoku
             {
                 if (brd[row, i] == num)
                 {
-                    highlightWithMessage(num, row, i, "column");
+                    highlightWithMessage(num, row, i, "row");
 
                     return false;
                 }
@@ -259,11 +262,13 @@ namespace Sudoku
 
         public void loadBoard(int level)
         {
+            Form1.filled = 0;
             if (level == 1)
             {
                 sol = beginnerBoards.ElementAt(beginnerBoardIndex);
                 lastGame = beginnerBoardIndex;
                 fxd = beginnerFixed.ElementAt(beginnerBoardIndex);
+                beginnerGamesPlayed.Add(lastGame);
                 beginnerBoardIndex++;
             }
             else if (level == 2)
@@ -271,6 +276,7 @@ namespace Sudoku
                 sol = moderateBoards.ElementAt(moderateBoardIndex);
                 lastGame = moderateBoardIndex;
                 fxd = moderateFixed.ElementAt(moderateBoardIndex);
+                moderateGamesPlayed.Add(lastGame);
                 moderateBoardIndex++;
             }
             else if (level == 3)
@@ -278,6 +284,7 @@ namespace Sudoku
                 sol = advancedBoards.ElementAt(advancedBoardIndex);
                 lastGame = advancedBoardIndex;
                 fxd = advancedFixed.ElementAt(advancedBoardIndex);
+                advancedGamesPlayed.Add(lastGame);
                 advancedBoardIndex++;
             }
             loadFirst();
@@ -329,6 +336,46 @@ namespace Sudoku
         public int getGameNumber()
         {
             return lastGame;
+        }
+
+        public void loadLastGame(int level)
+        {
+            if (level == 1)
+            {
+                sol = beginnerBoards.ElementAt(lastGame);
+                fxd = beginnerFixed.ElementAt(lastGame);
+            }
+            else if (level == 2)
+            {
+                sol = moderateBoards.ElementAt(lastGame);
+                fxd = moderateFixed.ElementAt(lastGame);
+            }
+            else if (level == 3)
+            {
+                sol = advancedBoards.ElementAt(lastGame);
+                fxd = advancedFixed.ElementAt(lastGame);
+            }
+            loadFirst();
+        }
+
+        public List<int> getPrevGames(int level)
+        {
+            if (level == 1)
+            {
+                return beginnerGamesPlayed;
+            }
+            else if (level == 2)
+            {
+                return moderateGamesPlayed;
+            }
+            else if (level == 3)
+            {
+                return advancedGamesPlayed;
+            }
+            else
+            {
+                return null;
+            }
         }
     }//class
 }//namespace

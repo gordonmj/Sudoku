@@ -54,6 +54,7 @@
             this.setButton = new System.Windows.Forms.Button();
             this.resetNameButton = new System.Windows.Forms.Button();
             this.currentLevel = new System.Windows.Forms.Label();
+            this.prevGames = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // board
@@ -347,6 +348,7 @@
             this.lastGame.TabIndex = 26;
             this.lastGame.Text = "Last Game";
             this.lastGame.UseVisualStyleBackColor = true;
+            this.lastGame.Click += new System.EventHandler(this.lastGame_Click);
             // 
             // setButton
             // 
@@ -386,11 +388,21 @@
             this.currentLevel.TabIndex = 29;
             this.currentLevel.Text = "Current Level: ";
             // 
+            // prevGames
+            // 
+            this.prevGames.FormattingEnabled = true;
+            this.prevGames.Location = new System.Drawing.Point(626, 552);
+            this.prevGames.Name = "prevGames";
+            this.prevGames.Size = new System.Drawing.Size(120, 95);
+            this.prevGames.TabIndex = 30;
+            this.prevGames.SelectedIndexChanged += new System.EventHandler(this.prevGames_SelectedIndexChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1067, 750);
+            this.Controls.Add(this.prevGames);
             this.Controls.Add(this.currentLevel);
             this.Controls.Add(this.resetNameButton);
             this.Controls.Add(this.setButton);
@@ -453,6 +465,7 @@
         private System.Windows.Forms.Button setButton;
         private System.Windows.Forms.Button resetNameButton;
         private System.Windows.Forms.Label currentLevel;
+        private System.Windows.Forms.ListBox prevGames;
     }
 }
 

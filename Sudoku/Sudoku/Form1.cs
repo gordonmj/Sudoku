@@ -170,6 +170,8 @@ namespace Sudoku
             {
 
             }
+            prevGames.DataSource = sudokuBoard.getPrevGames(level);
+            prevGames.Update();
         }
 
         private void exitButton_Click(object sender, EventArgs e)
@@ -304,6 +306,16 @@ namespace Sudoku
             lastGame.ForeColor = Color.Black;
             undoButton.ForeColor = Color.Black;
             resetButton.ForeColor = Color.Black;
+        }
+
+        private void lastGame_Click(object sender, EventArgs e)
+        {
+            sudokuBoard.loadLastGame(level);
+        }
+
+        private void prevGames_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
 
 
