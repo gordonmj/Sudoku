@@ -34,7 +34,7 @@ namespace Sudoku
         public int moderateBoardIndex = 0;
         public int advancedBoardIndex = 0;
         public int[,] sol = new int[9, 9];
-        public int lastGame = 0;
+        public int lastGame = -1;
 
         public Board(Panel p)
         {
@@ -221,6 +221,29 @@ namespace Sudoku
             drawLines();
         }
 
+        public int getGame()
+        {
+            int level = 0;
+            string[] lines = System.IO.File.ReadAllLines(@"C:\\Users\\Michael\\games.txt");
+            for (int i = lines.Length-1; i > 0; i-- )
+            {
+                if (lines[i] == Form1.playerId)
+                {
+                    lastGame = Convert.ToInt32(lines[i - 1][0]);
+                    level = Convert.ToInt32(lines[i - 1][2]);
+                }
+            }
+            return level;
+        }
+
+        public void saveGameNumber(String player, int level)
+        {
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\\Users\\Michael\\games.txt", true))
+            {
+                file.WriteLine(player+Environment.NewLine+lastGame+" "+level);
+            }
+        }
+
         public void textFileToGrid(int level)
         {
             string[] lines = System.IO.File.ReadAllLines(@"C:\\"+level+".txt");
@@ -288,6 +311,7 @@ namespace Sudoku
                 advancedBoardIndex++;
             }
             loadFirst();
+            saveGameNumber(Form1.playerId, level);
         }
 
         public void loadFirst()
@@ -340,6 +364,10 @@ namespace Sudoku
 
         public void loadLastGame(int level)
         {
+            if (lastGame == -1)
+            {
+                level = getGame();
+            }
             if (level == 1)
             {
                 sol = beginnerBoards.ElementAt(lastGame);

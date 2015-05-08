@@ -18,7 +18,7 @@ namespace Sudoku
         public bool setUp = false;
         //public Button buttons[] = {button1,button2, button3, button4, button5, button6, button7, button8, button9};
         public static List<int[]> prevMoves = new List<int[]>();
-        public String playerId = "";
+        public static String playerId = "";
         public static int filled;
         public int level = 0;
 
@@ -151,6 +151,7 @@ namespace Sudoku
             gameStarted = true;
             resetButton_Click(sender, e);
             setButton.ForeColor = Color.Black;
+            lastGame.ForeColor = Color.Black;
             sudokuBoard.textFileToGrid(1);
             sudokuBoard.textFileToGrid(2);
             sudokuBoard.textFileToGrid(3);
@@ -302,8 +303,6 @@ namespace Sudoku
             buttonBlank.ForeColor = Color.Black;
             solutionButton.ForeColor = Color.Black;
             stuckButton.ForeColor = Color.Black;
-
-            lastGame.ForeColor = Color.Black;
             undoButton.ForeColor = Color.Black;
             resetButton.ForeColor = Color.Black;
         }
