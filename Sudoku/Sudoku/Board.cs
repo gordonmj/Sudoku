@@ -21,8 +21,17 @@ namespace Sudoku
         public int[,] brd = new int[9,9]; 
         public bool[,] fxd = new bool[9,9];
         List<int[,]> allBoards = new List<int[,]>();
-        public int boardIndex = 0;
+        List<int[,]> beginnerBoards = new List<int[,]>();
+        List<int[,]> moderateBoards = new List<int[,]>();
+        List<int[,]> advancedBoards = new List<int[,]>();
+        List<bool[,]> beginnerFixed = new List<bool[,]>();
+        List<bool[,]> moderateFixed = new List<bool[,]>();
+        List<bool[,]> advancedFixed = new List<bool[,]>(); 
+        public int beginnerBoardIndex = 0;
+        public int moderateBoardIndex = 0;
+        public int advancedBoardIndex = 0;
         public int[,] sol = new int[9, 9];
+        public int lastGame = 0;
 
         public Board(Panel p)
         {
@@ -84,7 +93,7 @@ namespace Sudoku
 
         public bool fillHelper(int row, int col, int num, bool isUndo, bool isManual)
         {
-            if (fxd[row, col])
+            if (fxd[row, col] && isManual)
             {
                 MessageBox.Show("Sorry. You cannot change this space. Try again.");
                 return false;
@@ -209,26 +218,14 @@ namespace Sudoku
             drawLines();
         }
 
-        public void textFileToGrid()
+        public void textFileToGrid(int level)
         {
-            /*
-            OpenFileDialog oFD = new OpenFileDialog();
-            oFD.Filter = "Plaintext Files|*.txt";
-            oFD.Title = "Select a Plaintext File";
-            String filename = "";
-            if (oFD.ShowDialog() == DialogResult.OK)
-            {
-                filename = oFD.FileName;
-            }
-            */
-            //filename = "/solutions.txt";
-            string[] lines = System.IO.File.ReadAllLines(@"C:\\Users\\mgordon\\Documents\\solutions.txt");
+            string[] lines = System.IO.File.ReadAllLines(@"C:\\"+level+".txt");
             char[] delims = { '\n' };
-            string line;
-            for (int game = 0; game < 7000; game += 70)
+            foreach (String line in lines)
             {
-                line = lines[game];
                 int[,] newBoard = new int[9, 9];
+                bool[,] newFixed = new bool[9, 9];
                 int numeral = 0;
                 for (int r = 0; r < 9; r++)
                 {
@@ -237,28 +234,62 @@ namespace Sudoku
                         newBoard[r, c] = Convert.ToInt32(line[numeral++])-48;
                     }//c
                 }//r
-                allBoards.Add(newBoard);
+                numeral += 2;
+                for (int i = numeral+1; i < line.Length-2; i+=3)
+                {
+                    newFixed[Convert.ToInt32(line[i])-48, Convert.ToInt32(line[i + 1])-48] = true;
+                }
+                    if (level == 1)
+                    {
+                        beginnerBoards.Add(newBoard);
+                        beginnerFixed.Add(newFixed);
+                    }
+                    else if (level == 2)
+                    {
+                        moderateBoards.Add(newBoard);
+                        moderateFixed.Add(newFixed);
+                    }
+                    else if (level == 3)
+                    {
+                        advancedBoards.Add(newBoard);
+                        advancedFixed.Add(newFixed);
+                    }
             }//for game
         }//method
 
-        public void loadBoard()
+        public void loadBoard(int level)
         {
-            sol = allBoards.ElementAt(boardIndex++);
-            fxd = new bool[9, 9];
+            if (level == 1)
+            {
+                sol = beginnerBoards.ElementAt(beginnerBoardIndex);
+                lastGame = beginnerBoardIndex;
+                fxd = beginnerFixed.ElementAt(beginnerBoardIndex);
+                beginnerBoardIndex++;
+            }
+            else if (level == 2)
+            {
+                sol = moderateBoards.ElementAt(moderateBoardIndex);
+                lastGame = moderateBoardIndex;
+                fxd = moderateFixed.ElementAt(moderateBoardIndex);
+                moderateBoardIndex++;
+            }
+            else if (level == 3)
+            {
+                sol = advancedBoards.ElementAt(advancedBoardIndex);
+                lastGame = advancedBoardIndex;
+                fxd = advancedFixed.ElementAt(advancedBoardIndex);
+                advancedBoardIndex++;
+            }
+            loadFirst();
         }
 
-        public void loadFirst(int n)
+        public void loadFirst()
         {
-            Random rnd = new Random();
-            int done = 0;
-            int randRow, randCol;
-            while (done <= n){
-            randRow = rnd.Next(0, 9);
-            randCol = rnd.Next(0, 9);
-            if (brd[randRow,randCol]==0){
-                fillHelper(randRow, randCol, sol[randRow, randCol], false, false);
-                fxd[randRow, randCol] = true;
-                done++;
+            for (int r = 0; r<9;r++){
+                for (int c=0;c<9;c++){
+                    if(fxd[r,c]){
+                        fillHelper(r,c,sol[r,c],false,false);
+                    }
                 }
             }
         }
@@ -295,5 +326,9 @@ namespace Sudoku
             return true;
         }
 
+        public int getGameNumber()
+        {
+            return lastGame;
+        }
     }//class
 }//namespace

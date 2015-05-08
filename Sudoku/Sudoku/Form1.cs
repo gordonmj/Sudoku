@@ -44,7 +44,6 @@ namespace Sudoku
             {
                 return;
             }
-            sudokuBoard.textFileToGrid();
             sudokuBoard.displayBoard();
             setUp = true;
             newGameButton.ForeColor = Color.Black;
@@ -152,6 +151,9 @@ namespace Sudoku
             gameStarted = true;
             resetButton_Click(sender, e);
             setButton.ForeColor = Color.Black;
+            sudokuBoard.textFileToGrid(1);
+            sudokuBoard.textFileToGrid(2);
+            sudokuBoard.textFileToGrid(3);
             if (level == 1)
             {
                 Beginner_Click(sender, e);
@@ -246,35 +248,44 @@ namespace Sudoku
 
         private void Beginner_Click(object sender, EventArgs e)
         {
-            activateButtons();
-            resetButton_Click(sender, e);
-            sudokuBoard.loadBoard();
-            sudokuBoard.loadFirst(15);
-            level = 1;
-            currentLevel.Text = "Current Level: Beginner";
+            levelSet(sender, e, 1);
         }
 
         private void moderate_Click(object sender, EventArgs e)
         {
-            activateButtons();
-            resetButton_Click(sender, e);
-            sudokuBoard.loadBoard();
-            sudokuBoard.loadFirst(10);
-            level = 2;
-            currentLevel.Text = "Current Level: Moderate";
-           
+            levelSet(sender, e, 2);
         }
 
         private void Advanced_Click(object sender, EventArgs e)
         {
-            activateButtons();
-            resetButton_Click(sender, e);
-            sudokuBoard.loadBoard();
-            sudokuBoard.loadFirst(9);
-            level = 3;
-            currentLevel.Text = "Current Level: Advanced";
+            levelSet(sender, e, 3);
         }
 
+        public void levelSet(object sender, EventArgs e,int l)
+        {
+            activateButtons();
+            resetButton_Click(sender, e);
+            level = l;
+            sudokuBoard.loadBoard(l);
+            String levelName;
+            if (l == 1)
+            {
+                levelName = "Beginner";
+            }
+            else if (l == 2)
+            {
+                levelName = "Moderate";
+            }
+            else if (l == 3)
+            {
+                levelName = "Advanced";
+            }
+            else
+            {
+                levelName = "ERROR!";
+            }
+            currentLevel.Text = "Current Level: "+levelName+". Game #" + sudokuBoard.getGameNumber();
+        }
         public void activateButtons()
         {
             button1.ForeColor = Color.Black;
