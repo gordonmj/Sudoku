@@ -49,10 +49,11 @@
             this.Beginner = new System.Windows.Forms.Button();
             this.moderate = new System.Windows.Forms.Button();
             this.Advanced = new System.Windows.Forms.Button();
-            this.lastGameBeginner = new System.Windows.Forms.Button();
-            this.lastGameModerate = new System.Windows.Forms.Button();
-            this.lastGameAdvanced = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.lastGame = new System.Windows.Forms.Button();
+            this.setButton = new System.Windows.Forms.Button();
+            this.resetNameButton = new System.Windows.Forms.Button();
+            this.currentLevel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // board
@@ -246,6 +247,7 @@
             this.stuckButton.TabIndex = 15;
             this.stuckButton.Text = "Am I Stuck?";
             this.stuckButton.UseVisualStyleBackColor = true;
+            this.stuckButton.Click += new System.EventHandler(this.stuckButton_Click);
             // 
             // playerID
             // 
@@ -253,7 +255,7 @@
             this.playerID.AutoSize = true;
             this.playerID.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.playerID.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.playerID.Location = new System.Drawing.Point(819, 249);
+            this.playerID.Location = new System.Drawing.Point(844, 249);
             this.playerID.Name = "playerID";
             this.playerID.Size = new System.Drawing.Size(108, 25);
             this.playerID.TabIndex = 16;
@@ -290,92 +292,110 @@
             this.Beginner.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.Beginner.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Beginner.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.Beginner.Location = new System.Drawing.Point(644, 337);
+            this.Beginner.Location = new System.Drawing.Point(644, 380);
             this.Beginner.Name = "Beginner";
             this.Beginner.Size = new System.Drawing.Size(102, 38);
             this.Beginner.TabIndex = 19;
             this.Beginner.Text = "Beginner";
             this.Beginner.UseVisualStyleBackColor = true;
+            this.Beginner.Click += new System.EventHandler(this.Beginner_Click);
             // 
             // moderate
             // 
             this.moderate.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.moderate.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.moderate.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.moderate.Location = new System.Drawing.Point(757, 337);
+            this.moderate.Location = new System.Drawing.Point(757, 380);
             this.moderate.Name = "moderate";
             this.moderate.Size = new System.Drawing.Size(102, 38);
             this.moderate.TabIndex = 20;
             this.moderate.Text = "Moderate";
             this.moderate.UseVisualStyleBackColor = true;
+            this.moderate.Click += new System.EventHandler(this.moderate_Click);
             // 
             // Advanced
             // 
             this.Advanced.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.Advanced.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Advanced.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.Advanced.Location = new System.Drawing.Point(869, 337);
+            this.Advanced.Location = new System.Drawing.Point(869, 380);
             this.Advanced.Name = "Advanced";
             this.Advanced.Size = new System.Drawing.Size(106, 38);
             this.Advanced.TabIndex = 21;
             this.Advanced.Text = "Advanced";
             this.Advanced.UseVisualStyleBackColor = true;
-            // 
-            // lastGameBeginner
-            // 
-            this.lastGameBeginner.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.lastGameBeginner.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lastGameBeginner.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.lastGameBeginner.Location = new System.Drawing.Point(644, 381);
-            this.lastGameBeginner.Name = "lastGameBeginner";
-            this.lastGameBeginner.Size = new System.Drawing.Size(102, 53);
-            this.lastGameBeginner.TabIndex = 22;
-            this.lastGameBeginner.Text = "Last Game Beginner";
-            this.lastGameBeginner.UseVisualStyleBackColor = true;
-            // 
-            // lastGameModerate
-            // 
-            this.lastGameModerate.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.lastGameModerate.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lastGameModerate.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.lastGameModerate.Location = new System.Drawing.Point(757, 381);
-            this.lastGameModerate.Name = "lastGameModerate";
-            this.lastGameModerate.Size = new System.Drawing.Size(102, 53);
-            this.lastGameModerate.TabIndex = 23;
-            this.lastGameModerate.Text = "Last Game Moderate";
-            this.lastGameModerate.UseVisualStyleBackColor = true;
-            // 
-            // lastGameAdvanced
-            // 
-            this.lastGameAdvanced.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.lastGameAdvanced.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lastGameAdvanced.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.lastGameAdvanced.Location = new System.Drawing.Point(869, 381);
-            this.lastGameAdvanced.Name = "lastGameAdvanced";
-            this.lastGameAdvanced.Size = new System.Drawing.Size(102, 53);
-            this.lastGameAdvanced.TabIndex = 24;
-            this.lastGameAdvanced.Text = "Last Game Advanced";
-            this.lastGameAdvanced.UseVisualStyleBackColor = true;
+            this.Advanced.Click += new System.EventHandler(this.Advanced_Click);
             // 
             // textBox1
             // 
             this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.ForeColor = System.Drawing.SystemColors.InactiveCaption;
+            this.textBox1.ForeColor = System.Drawing.SystemColors.ControlText;
             this.textBox1.Location = new System.Drawing.Point(824, 278);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(136, 29);
+            this.textBox1.Size = new System.Drawing.Size(165, 29);
             this.textBox1.TabIndex = 25;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            // 
+            // lastGame
+            // 
+            this.lastGame.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lastGame.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lastGame.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.lastGame.Location = new System.Drawing.Point(736, 435);
+            this.lastGame.Name = "lastGame";
+            this.lastGame.Size = new System.Drawing.Size(145, 38);
+            this.lastGame.TabIndex = 26;
+            this.lastGame.Text = "Last Game";
+            this.lastGame.UseVisualStyleBackColor = true;
+            // 
+            // setButton
+            // 
+            this.setButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.setButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.setButton.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.setButton.Location = new System.Drawing.Point(824, 313);
+            this.setButton.Name = "setButton";
+            this.setButton.Size = new System.Drawing.Size(84, 29);
+            this.setButton.TabIndex = 27;
+            this.setButton.Text = "SET";
+            this.setButton.UseVisualStyleBackColor = true;
+            this.setButton.Click += new System.EventHandler(this.setButton_Click);
+            // 
+            // resetNameButton
+            // 
+            this.resetNameButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.resetNameButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.resetNameButton.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.resetNameButton.Location = new System.Drawing.Point(914, 313);
+            this.resetNameButton.Name = "resetNameButton";
+            this.resetNameButton.Size = new System.Drawing.Size(75, 29);
+            this.resetNameButton.TabIndex = 28;
+            this.resetNameButton.Text = "Reset";
+            this.resetNameButton.UseVisualStyleBackColor = true;
+            this.resetNameButton.Click += new System.EventHandler(this.resetNameButton_Click);
+            // 
+            // currentLevel
+            // 
+            this.currentLevel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.currentLevel.AutoSize = true;
+            this.currentLevel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.currentLevel.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.currentLevel.Location = new System.Drawing.Point(619, 511);
+            this.currentLevel.Name = "currentLevel";
+            this.currentLevel.Size = new System.Drawing.Size(168, 25);
+            this.currentLevel.TabIndex = 29;
+            this.currentLevel.Text = "Current Level: ";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1067, 750);
+            this.Controls.Add(this.currentLevel);
+            this.Controls.Add(this.resetNameButton);
+            this.Controls.Add(this.setButton);
+            this.Controls.Add(this.lastGame);
             this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.lastGameAdvanced);
-            this.Controls.Add(this.lastGameModerate);
-            this.Controls.Add(this.lastGameBeginner);
             this.Controls.Add(this.Advanced);
             this.Controls.Add(this.moderate);
             this.Controls.Add(this.Beginner);
@@ -428,10 +448,11 @@
         private System.Windows.Forms.Button Beginner;
         private System.Windows.Forms.Button moderate;
         private System.Windows.Forms.Button Advanced;
-        private System.Windows.Forms.Button lastGameBeginner;
-        private System.Windows.Forms.Button lastGameModerate;
-        private System.Windows.Forms.Button lastGameAdvanced;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button lastGame;
+        private System.Windows.Forms.Button setButton;
+        private System.Windows.Forms.Button resetNameButton;
+        private System.Windows.Forms.Label currentLevel;
     }
 }
 

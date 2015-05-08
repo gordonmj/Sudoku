@@ -63,6 +63,7 @@ namespace Sudoku
         {
             displayBoard();
             brd = new int[9,9];
+            
         }
 
         public bool fillSquare(Point pt, int num)
@@ -83,14 +84,15 @@ namespace Sudoku
 
         public bool fillHelper(int row, int col, int num, bool isUndo, bool isManual)
         {
+            if (fxd[row, col])
+            {
+                MessageBox.Show("Sorry. You cannot change this space. Try again.");
+                return false;
+            }
             if (!isManual || (isValidinCol(num, col) && isValidinRow(num, row) && isValidinSquare(num, row, col)))
             {
                 eraseSquare(new Point(col * boxWidth + 20, row * boxHeight + 20));
-                if (fxd[row, col])
-                {
-                    MessageBox.Show("Sorry. You cannot change this space. Try again.");
-                    return false;
-                }
+                Form1.filled += 2;
                 int[] prevMove = { row, col, brd[row, col], num };
                 if (!isUndo)
                 {
@@ -131,6 +133,7 @@ namespace Sudoku
                 //new Point(probC*boxWidth+boxWidth/2,probR*boxHeight+boxHeight/2)
                 pG.FillRectangle(new SolidBrush(Color.White), (probC*boxWidth)+10, (probR*boxHeight)+10, boxWidth-20, boxHeight-20);
                 pG.DrawRectangle(new Pen (new SolidBrush(Color.Red)), probC * boxWidth, probR * boxHeight, boxWidth, boxHeight);
+                Form1.filled--;
             }
             catch (IndexOutOfRangeException ioore)
             {
@@ -244,12 +247,12 @@ namespace Sudoku
             fxd = new bool[9, 9];
         }
 
-        public void loadFirstNine()
+        public void loadFirst(int n)
         {
             Random rnd = new Random();
             int done = 0;
             int randRow, randCol;
-            while (done <= 9){
+            while (done <= n){
             randRow = rnd.Next(0, 9);
             randCol = rnd.Next(0, 9);
             if (brd[randRow,randCol]==0){
@@ -272,6 +275,24 @@ namespace Sudoku
                     }
                 }
             }
+        }
+
+        public bool isStuck()
+        {
+            for (int r = 0; r < 9; r++)
+            {
+                for (int c = 0; c < 9; c++)
+                {
+                    for (int n = 0; n < 9; n++)
+                    {
+                        if ((isValidinCol(n, c) && isValidinRow(n, r) && isValidinSquare(n, r, c)))
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
         }
 
     }//class

@@ -18,7 +18,10 @@ namespace Sudoku
         public bool setUp = false;
         //public Button buttons[] = {button1,button2, button3, button4, button5, button6, button7, button8, button9};
         public static List<int[]> prevMoves = new List<int[]>();
-        
+        public String playerId = "";
+        public static int filled;
+        public int level = 0;
+
         public Form1()
         {
             InitializeComponent();
@@ -51,6 +54,7 @@ namespace Sudoku
         private void resetButton_Click(object sender, EventArgs e)
         {
             sudokuBoard.clearDisplay();
+            prevMoves.Clear();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -117,6 +121,10 @@ namespace Sudoku
                 {
                     numClicked = 0;
                 }
+                if (filled >= 81)
+                {
+                    MessageBox.Show("Game over! Well done!");
+                }
             }
             else if (numClicked == -1)
             {
@@ -137,30 +145,29 @@ namespace Sudoku
 
         private void newGameButton_Click(object sender, EventArgs e)
         {
+            if (!gameStarted)
+            {
+                MessageBox.Show("Enter your name in the text box below, then select a level.");
+            }
             gameStarted = true;
             resetButton_Click(sender, e);
-            sudokuBoard.loadBoard();
-            sudokuBoard.loadFirstNine();
-            button1.ForeColor = Color.Black;
-            button2.ForeColor = Color.Black;
-            button3.ForeColor = Color.Black;
-            button4.ForeColor = Color.Black;
-            button5.ForeColor = Color.Black;
-            button6.ForeColor = Color.Black;
-            button7.ForeColor = Color.Black;
-            button8.ForeColor = Color.Black;
-            button9.ForeColor = Color.Black;
-            buttonBlank.ForeColor = Color.Black;
-            solutionButton.ForeColor = Color.Black;
-            stuckButton.ForeColor = Color.Black;
-            Beginner.ForeColor = Color.Black;
-            lastGameBeginner.ForeColor = Color.Black;
-            moderate.ForeColor = Color.Black;
-            lastGameModerate.ForeColor = Color.Black;
-            Advanced.ForeColor = Color.Black;
-            lastGameAdvanced.ForeColor = Color.Black;
-            undoButton.ForeColor = Color.Black;
-            resetButton.ForeColor = Color.Black;
+            setButton.ForeColor = Color.Black;
+            if (level == 1)
+            {
+                Beginner_Click(sender, e);
+            }
+            else if (level == 2)
+            {
+                moderate_Click(sender, e);
+            }
+            else if (level == 3)
+            {
+                Advanced_Click(sender, e);
+            }
+            else
+            {
+
+            }
         }
 
         private void exitButton_Click(object sender, EventArgs e)
@@ -196,8 +203,98 @@ namespace Sudoku
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-
         }
+
+        private void stuckButton_Click(object sender, EventArgs e)
+        {
+            if (sudokuBoard.isStuck())
+            {
+                MessageBox.Show("You are stuck. New game?");
+            }
+            else
+            {
+                MessageBox.Show("No. You're not stuck. Keep trying!");
+            }
+        }
+
+        private void setButton_Click(object sender, EventArgs e)
+        {
+            if (playerId == "")
+            {
+                playerId = textBox1.Text;
+                playerID.Text = playerId;
+                resetNameButton.ForeColor = Color.Black;
+                playerID.ForeColor = Color.Black;
+                Beginner.ForeColor = Color.Black;
+                moderate.ForeColor = Color.Black;
+                Advanced.ForeColor = Color.Black;
+            }
+            else
+            {
+                MessageBox.Show("Player ID already entered.");
+                textBox1.Text = playerId;
+            }
+        }
+
+        private void resetNameButton_Click(object sender, EventArgs e)
+        {
+            playerId = "";
+            playerID.Text = "Player ID";
+            playerID.ForeColor = Color.Gray;
+            textBox1.Text = "";
+        }
+
+        private void Beginner_Click(object sender, EventArgs e)
+        {
+            activateButtons();
+            resetButton_Click(sender, e);
+            sudokuBoard.loadBoard();
+            sudokuBoard.loadFirst(15);
+            level = 1;
+            currentLevel.Text = "Current Level: Beginner";
+        }
+
+        private void moderate_Click(object sender, EventArgs e)
+        {
+            activateButtons();
+            resetButton_Click(sender, e);
+            sudokuBoard.loadBoard();
+            sudokuBoard.loadFirst(10);
+            level = 2;
+            currentLevel.Text = "Current Level: Moderate";
+           
+        }
+
+        private void Advanced_Click(object sender, EventArgs e)
+        {
+            activateButtons();
+            resetButton_Click(sender, e);
+            sudokuBoard.loadBoard();
+            sudokuBoard.loadFirst(9);
+            level = 3;
+            currentLevel.Text = "Current Level: Advanced";
+        }
+
+        public void activateButtons()
+        {
+            button1.ForeColor = Color.Black;
+            button2.ForeColor = Color.Black;
+            button3.ForeColor = Color.Black;
+            button4.ForeColor = Color.Black;
+            button5.ForeColor = Color.Black;
+            button6.ForeColor = Color.Black;
+            button7.ForeColor = Color.Black;
+            button8.ForeColor = Color.Black;
+            button9.ForeColor = Color.Black;
+            buttonBlank.ForeColor = Color.Black;
+            solutionButton.ForeColor = Color.Black;
+            stuckButton.ForeColor = Color.Black;
+
+            lastGame.ForeColor = Color.Black;
+            undoButton.ForeColor = Color.Black;
+            resetButton.ForeColor = Color.Black;
+        }
+
 
     }
 }
