@@ -42,8 +42,10 @@ namespace Sudoku
         {
             if (setUp)
             {
+                sudokuBoard.displayBoard();
                 return;
             }
+            MessageBox.Show("Select 'New Game'");
             sudokuBoard.displayBoard();
             setUp = true;
             newGameButton.ForeColor = Color.Black;
@@ -51,6 +53,13 @@ namespace Sudoku
         }
 
         private void resetButton_Click(object sender, EventArgs e)
+        {
+            levelSet(sender, e, 0);
+            reset();
+            MessageBox.Show("Click a level for a new game. For a new player, click 'reset' under the tex box.");
+        }
+
+        public void reset()
         {
             sudokuBoard.clearDisplay();
             prevMoves.Clear();
@@ -146,31 +155,37 @@ namespace Sudoku
         {
             if (!gameStarted)
             {
-                MessageBox.Show("Enter your name in the text box below, then select a level.");
-            }
-            gameStarted = true;
-            resetButton_Click(sender, e);
-            setButton.ForeColor = Color.Black;
-            lastGame.ForeColor = Color.Black;
-            sudokuBoard.textFileToGrid(1);
-            sudokuBoard.textFileToGrid(2);
-            sudokuBoard.textFileToGrid(3);
-            if (level == 1)
-            {
-                Beginner_Click(sender, e);
-            }
-            else if (level == 2)
-            {
-                moderate_Click(sender, e);
-            }
-            else if (level == 3)
-            {
-                Advanced_Click(sender, e);
+                MessageBox.Show("Enter your name under 'Player ID'.");
+                gameStarted = true;
+                reset();
+                setButton.ForeColor = Color.Black;
+                lastGame.ForeColor = Color.Black;
+                sudokuBoard.textFileToGrid(1);
+                sudokuBoard.textFileToGrid(2);
+                sudokuBoard.textFileToGrid(3);
             }
             else
             {
-
+                MessageBox.Show("Select a level.");
             }
+
+            //sudokuBoard.loadBoard(level);
+            //if (level == 1)
+            //{
+            //    Beginner_Click(sender, e);
+            //}
+            //else if (level == 2)
+            //{
+            //    moderate_Click(sender, e);
+            //}
+            //else if (level == 3)
+            //{
+            //    Advanced_Click(sender, e);
+            //}
+            //else
+            //{
+
+            //}
             prevGames.DataSource = sudokuBoard.getPrevGames(level);
             prevGames.Update();
         }
@@ -233,6 +248,7 @@ namespace Sudoku
                 Beginner.ForeColor = Color.Black;
                 moderate.ForeColor = Color.Black;
                 Advanced.ForeColor = Color.Black;
+                MessageBox.Show("Now select the level you want to play.");
             }
             else
             {
@@ -247,6 +263,7 @@ namespace Sudoku
             playerID.Text = "Player ID";
             playerID.ForeColor = Color.Gray;
             textBox1.Text = "";
+            levelSet(sender, e, 0);
         }
 
         private void Beginner_Click(object sender, EventArgs e)
@@ -267,7 +284,7 @@ namespace Sudoku
         public void levelSet(object sender, EventArgs e,int l)
         {
             activateButtons();
-            resetButton_Click(sender, e);
+            reset();
             level = l;
             sudokuBoard.loadBoard(l);
             String levelName;
@@ -285,9 +302,9 @@ namespace Sudoku
             }
             else
             {
-                levelName = "ERROR!";
+                levelName = "Unset";
             }
-            currentLevel.Text = "Current Level: "+levelName+". Game #" + sudokuBoard.getGameNumber();
+            currentLevel.Text = "Current Level: " + levelName + ". Game #" + sudokuBoard.getGameNumber();
         }
         public void activateButtons()
         {
@@ -309,6 +326,12 @@ namespace Sudoku
 
         private void lastGame_Click(object sender, EventArgs e)
         {
+            reset();
+            if (level <= 0)
+            {
+                MessageBox.Show("Select a level first.");
+                return;
+            }
             sudokuBoard.loadLastGame(level);
         }
 

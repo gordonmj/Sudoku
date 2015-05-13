@@ -34,7 +34,7 @@ namespace Sudoku
         public int moderateBoardIndex = 0;
         public int advancedBoardIndex = 0;
         public int[,] sol = new int[9, 9];
-        public int lastGame = -1;
+        public int lastGame = 0;
 
         public Board(Panel p)
         {
@@ -49,10 +49,16 @@ namespace Sudoku
         public void displayBoard()
         {
             pG.FillRectangle(new SolidBrush(Color.White), 0, 0, width, height);
-            drawLines();
+            drawLines(true);
         }//method
 
-        public void drawLines()
+        public void displayCurrentBoard()
+        {
+            pG.FillRectangle(new SolidBrush(Color.White), 0, 0, width, height);
+            drawLines(false);
+        }
+
+        public void drawLines(bool isNew)
         {
             for (int r = 0; r < 9; r++)
             {
@@ -68,6 +74,11 @@ namespace Sudoku
                     {
                         pG.FillEllipse(new SolidBrush(Color.Red), (boxWidth * c) - 10, (boxHeight * r) - 10, 20, 20);
                     }//if
+                    if (!isNew)
+                    {
+                        fillHelper(r, c, brd[r, c], false, false);
+                        Form1.filled -= 1;
+                    }
                 }//for c
             }//for r
         }
@@ -218,13 +229,13 @@ namespace Sudoku
             pG.FillRectangle(new SolidBrush(Color.White), col * boxWidth, row * boxHeight, boxWidth, boxHeight);
             pG.DrawRectangle(new Pen(new SolidBrush(Color.Red)), col * boxWidth, row * boxHeight, boxWidth, boxHeight);
             pG.DrawString(num.ToString(), new Font("Arial", 22), new SolidBrush(Color.Black), new Point(col * boxWidth + 20, row * boxHeight + 20));
-            drawLines();
+            drawLines(false);
         }
 
         public int getGame()
         {
             int level = 0;
-            string[] lines = System.IO.File.ReadAllLines(@"C:\\Users\\Michael\\games.txt");
+            string[] lines = System.IO.File.ReadAllLines(@"C:\\Users\\mgordon\\games.txt");
             for (int i = lines.Length-1; i > 0; i-- )
             {
                 if (lines[i] == Form1.playerId)
@@ -238,7 +249,7 @@ namespace Sudoku
 
         public void saveGameNumber(String player, int level)
         {
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\\Users\\Michael\\games.txt", true))
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\\Users\\mgordon\\games.txt", true))
             {
                 file.WriteLine(player+Environment.NewLine+lastGame+" "+level);
             }
@@ -246,7 +257,7 @@ namespace Sudoku
 
         public void textFileToGrid(int level)
         {
-            string[] lines = System.IO.File.ReadAllLines(@"C:\\"+level+".txt");
+            string[] lines = System.IO.File.ReadAllLines(@"C:\\Users\\mgordon\\"+level+".txt");
             char[] delims = { '\n' };
             foreach (String line in lines)
             {
@@ -309,6 +320,10 @@ namespace Sudoku
                 fxd = advancedFixed.ElementAt(advancedBoardIndex);
                 advancedGamesPlayed.Add(lastGame);
                 advancedBoardIndex++;
+            }
+            else
+            {
+                return;
             }
             loadFirst();
             saveGameNumber(Form1.playerId, level);
