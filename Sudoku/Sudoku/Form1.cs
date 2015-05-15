@@ -16,11 +16,11 @@ namespace Sudoku
         public int numClicked;
         public bool gameStarted = false;
         public bool setUp = false;
-        //public Button buttons[] = {button1,button2, button3, button4, button5, button6, button7, button8, button9};
         public static List<int[]> prevMoves = new List<int[]>();
         public static String playerId = "";
         public static int filled;
         public int level = 0;
+        public bool lastGameMode = false;
 
         public Form1()
         {
@@ -63,6 +63,7 @@ namespace Sudoku
         {
             sudokuBoard.clearDisplay();
             prevMoves.Clear();
+            filled = 0;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -160,6 +161,7 @@ namespace Sudoku
                 reset();
                 setButton.ForeColor = Color.Black;
                 lastGame.ForeColor = Color.Black;
+                textBox1.BackColor = Color.White;
                 sudokuBoard.textFileToGrid(1);
                 sudokuBoard.textFileToGrid(2);
                 sudokuBoard.textFileToGrid(3);
@@ -168,7 +170,7 @@ namespace Sudoku
             {
                 MessageBox.Show("Select a level.");
             }
-
+            lastGameMode = false;
             //sudokuBoard.loadBoard(level);
             //if (level == 1)
             //{
@@ -248,7 +250,7 @@ namespace Sudoku
                 Beginner.ForeColor = Color.Black;
                 moderate.ForeColor = Color.Black;
                 Advanced.ForeColor = Color.Black;
-                MessageBox.Show("Now select the level you want to play.");
+                MessageBox.Show("Now select the level you want to play, or select 'Last Game'.");
             }
             else
             {
@@ -286,7 +288,6 @@ namespace Sudoku
             activateButtons();
             reset();
             level = l;
-            sudokuBoard.loadBoard(l);
             String levelName;
             if (l == 1)
             {
@@ -304,7 +305,16 @@ namespace Sudoku
             {
                 levelName = "Unset";
             }
-            currentLevel.Text = "Current Level: " + levelName + ". Game #" + sudokuBoard.getGameNumber();
+            if (lastGameMode)
+            {
+                sudokuBoard.loadLastGame(level);
+            }
+            else
+            {
+                sudokuBoard.loadBoard(l);
+            }
+            currentLevel.Text = "Current Level: " + levelName + ". Game #" + (sudokuBoard.getGameNumber()+1);
+            MessageBox.Show("Time to start playing. Select numbers from the box on the right to add to the board.");
         }
         public void activateButtons()
         {
@@ -329,10 +339,15 @@ namespace Sudoku
             reset();
             if (level <= 0)
             {
+                lastGameMode = true;
                 MessageBox.Show("Select a level first.");
                 return;
             }
-            sudokuBoard.loadLastGame(level);
+            else
+            {
+                sudokuBoard.loadLastGame(level);
+
+            }
         }
 
         private void prevGames_SelectedIndexChanged(object sender, EventArgs e)

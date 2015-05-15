@@ -112,31 +112,47 @@ namespace Sudoku
                 MessageBox.Show("Sorry. You cannot change this space. Try again.");
                 return false;
             }
-            if (!isManual || (isValidinCol(num, col) && isValidinRow(num, row) && isValidinSquare(num, row, col)))
+            String number;
+            if (num == 0)
+            {
+                number = "";
+            }
+            else
+            {
+                number = num.ToString();
+            }
+            Color c = Color.Black;
+            if (fxd[row, col] && !isManual)
+            {
+                c = Color.Blue;
+            }
+
+            if (isManual)
             {
                 eraseSquare(new Point(col * boxWidth + 20, row * boxHeight + 20));
                 Form1.filled += 2;
+            }
+            pG.DrawString(number, new Font("Arial", 22), new SolidBrush(c), new Point(col * boxWidth + 20, row * boxHeight + 20));
+
+            if (!isManual || (isValidinCol(num, col,row) && isValidinRow(num, row,col) && isValidinSquare(num, row, col)))
+            {
+
+
                 int[] prevMove = { row, col, brd[row, col], num };
                 if (!isUndo)
                 {
                     Form1.prevMoves.Add(prevMove);
                 }
                 brd[row, col] = num;
-                String number;
-                if (num == 0)
-                {
-                    number = "";
-                }
-                else
-                {
-                    number = num.ToString();
-                }
+
                 //new Point(probC*boxWidth+boxWidth/2,probR*boxHeight+boxHeight/2)
-                pG.DrawString(number, new Font("Arial", 22), new SolidBrush(Color.Black), new Point(col * boxWidth + 20, row * boxHeight + 20));
+
                 return true;
             }
             else
             {
+                eraseSquare(new Point(col * boxWidth + 20, row * boxHeight + 20));
+                brd[row, col] = 0;
                 return false;
             }
 
@@ -150,6 +166,7 @@ namespace Sudoku
                 probR = pt.Y / boxHeight;
                 if (fxd[probR, probC])
                 {
+                    MessageBox.Show("Can't erase. This is part of the initial configuration.");
                     return;
                 }
                 brd[probR, probC] = 0;
@@ -164,7 +181,7 @@ namespace Sudoku
             }
         }//method
 
-        public bool isValidinRow(int num, int row)
+        public bool isValidinRow(int num, int row, int col)
         {
             if (num == 0)
             {
@@ -175,14 +192,13 @@ namespace Sudoku
                 if (brd[row, i] == num)
                 {
                     highlightWithMessage(num, row, i, "row");
-
                     return false;
                 }
             }
             return true;
         }
 
-        public bool isValidinCol(int num, int col)
+        public bool isValidinCol(int num, int col, int row)
         {
             if (num == 0)
             {
@@ -240,8 +256,9 @@ namespace Sudoku
             {
                 if (lines[i] == Form1.playerId)
                 {
-                    lastGame = Convert.ToInt32(lines[i - 1][0]);
-                    level = Convert.ToInt32(lines[i - 1][2]);
+                    lastGame = Convert.ToInt32(lines[i - 1][0])-48;
+                    level = Convert.ToInt32(lines[i - 1][2])-48;
+                    return level;
                 }
             }
             return level;
@@ -296,37 +313,46 @@ namespace Sudoku
 
         public void loadBoard(int level)
         {
-            Form1.filled = 0;
-            if (level == 1)
+            try
             {
-                sol = beginnerBoards.ElementAt(beginnerBoardIndex);
-                lastGame = beginnerBoardIndex;
-                fxd = beginnerFixed.ElementAt(beginnerBoardIndex);
-                beginnerGamesPlayed.Add(lastGame);
-                beginnerBoardIndex++;
+                Form1.filled = 0;
+                if (level == 1)
+                {
+                    sol = beginnerBoards.ElementAt(beginnerBoardIndex);
+                    lastGame = beginnerBoardIndex;
+                    fxd = beginnerFixed.ElementAt(beginnerBoardIndex);
+                    beginnerGamesPlayed.Add(lastGame);
+                    beginnerBoardIndex++;
+                }
+                else if (level == 2)
+                {
+                    sol = moderateBoards.ElementAt(moderateBoardIndex);
+                    lastGame = moderateBoardIndex;
+                    fxd = moderateFixed.ElementAt(moderateBoardIndex);
+                    moderateGamesPlayed.Add(lastGame);
+                    moderateBoardIndex++;
+                }
+                else if (level == 3)
+                {
+                    sol = advancedBoards.ElementAt(advancedBoardIndex);
+                    lastGame = advancedBoardIndex;
+                    fxd = advancedFixed.ElementAt(advancedBoardIndex);
+                    advancedGamesPlayed.Add(lastGame);
+                    advancedBoardIndex++;
+                }
+                else
+                {
+                    return;
+                }
+                loadFirst();
+                saveGameNumber(Form1.playerId, level);
             }
-            else if (level == 2)
+            catch
             {
-                sol = moderateBoards.ElementAt(moderateBoardIndex);
-                lastGame = moderateBoardIndex;
-                fxd = moderateFixed.ElementAt(moderateBoardIndex);
-                moderateGamesPlayed.Add(lastGame);
-                moderateBoardIndex++;
-            }
-            else if (level == 3)
-            {
-                sol = advancedBoards.ElementAt(advancedBoardIndex);
-                lastGame = advancedBoardIndex;
-                fxd = advancedFixed.ElementAt(advancedBoardIndex);
-                advancedGamesPlayed.Add(lastGame);
-                advancedBoardIndex++;
-            }
-            else
-            {
+                MessageBox.Show("That's all the games we have for this level. Sorry.");
                 return;
             }
-            loadFirst();
-            saveGameNumber(Form1.playerId, level);
+            
         }
 
         public void loadFirst()
@@ -362,7 +388,7 @@ namespace Sudoku
                 {
                     for (int n = 0; n < 9; n++)
                     {
-                        if ((isValidinCol(n, c) && isValidinRow(n, r) && isValidinSquare(n, r, c)))
+                        if ((isValidinCol(n, c,r) && isValidinRow(n, r,c) && isValidinSquare(n, r, c)))
                         {
                             return false;
                         }
@@ -379,7 +405,7 @@ namespace Sudoku
 
         public void loadLastGame(int level)
         {
-            if (lastGame == -1)
+            if (lastGame == 0)
             {
                 level = getGame();
             }
